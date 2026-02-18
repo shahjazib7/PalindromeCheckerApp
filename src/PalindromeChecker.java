@@ -1,47 +1,40 @@
-import java.util.Queue;
-import java.util.LinkedList;
-import java.util.Stack;
+import java.util.Deque;
+import java.util.ArrayDeque;
 
-public class FifoLifoDemo {
+public class PalindromeCheckerDeque {
 
     public static void main(String[] args) {
 
+        String input = "racecar";
+
+        String str = input.toLowerCase();
 
 
-        Queue<String> queue = new LinkedList<>();
+        Deque<Character> deque = new ArrayDeque<>();
 
-        System.out.println("FIFO (Queue) Example:");
-
-
-        queue.add("Apple");
-        queue.add("Banana");
-        queue.add("Cherry");
-
-        System.out.println("Queue: " + queue);
-
-        while (!queue.isEmpty()) {
-            String removed = queue.remove(); // removes from front
-            System.out.println("Removed: " + removed + " | Remaining Queue: " + queue);
+        for (int i = 0; i < str.length(); i++) {
+            deque.addLast(str.charAt(i));
         }
 
-        System.out.println("\n-------------------------------\n");
+        boolean isPalindrome = true;
 
 
-        Stack<String> stack = new Stack<>();
+        while (deque.size() > 1) {
+            char front = deque.removeFirst();
+            char rear = deque.removeLast();
 
-        System.out.println("LIFO (Stack) Example:");
+            if (front != rear) {
+                isPalindrome = false;
+                break;
+            }
+        }
 
 
-        stack.push("Apple");
-        stack.push("Banana");
-        stack.push("Cherry");
-
-        System.out.println("Stack: " + stack);
-
-        while (!stack.isEmpty()) {
-            String removed = stack.pop(); // removes from top
-            System.out.println("Popped: " + removed + " | Remaining Stack: " + stack);
+        System.out.println("String: " + input);
+        if (isPalindrome) {
+            System.out.println("It is a palindrome.");
+        } else {
+            System.out.println("It is not a palindrome.");
         }
     }
 }
-
