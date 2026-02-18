@@ -4,28 +4,24 @@ public class PalindromeChecker {
     public static void main(String[] args) {
 
 
-        String input = "madam";
-        String str = input.toLowerCase();
 
-        int left = 0;
-        int right = str.length() - 1;
-        boolean isPalindrome = true;
 
-        while (left < right) {
-            if (str.charAt(left) != str.charAt(right)) {
-                isPalindrome = false;
-                break;
+                String input = "racecar";
+
+
+                String reversed = "";
+
+                for (int i = input.length() - 1; i >= 0; i--) {
+                    reversed += input.charAt(i);
+                }
+
+           g
+                if (input.equalsIgnoreCase(reversed)) {
+                    System.out.println("String: " + input);
+                    System.out.println("It is a palindrome.");
+                } else {
+                    System.out.println("String: " + input);
+                    System.out.println("It is not a palindrome.");
+                }
             }
-            left++;
-            right--;
         }
-
-
-        System.out.println("String: " + input);
-        if (isPalindrome) {
-            System.out.println("It is a palindrome.");
-        } else {
-            System.out.println("It is not a palindrome.");
-        }
-    }
-}
