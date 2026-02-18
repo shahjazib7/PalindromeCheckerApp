@@ -1,37 +1,71 @@
-import java.util.Deque;
-import java.util.ArrayDeque;
+import java.util.Stack;
 
-public class PalindromeCheckerDeque {
+class Node {
+    char data;
+    Node next;
+
+    Node(char data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+class SinglyLinkedList {
+    Node head;
+
+    // Add node at the end
+    void append(char data) {
+        Node newNode = new Node(data);
+        if (head == null) {
+            head = newNode;
+            return;
+        }
+        Node temp = head;
+        while (temp.next != null) {
+            temp = temp.next;
+        }
+        temp.next = newNode;
+    }
+
+    // Check palindrome
+    boolean isPalindrome() {
+        Stack<Character> stack = new Stack<>();
+        Node temp = head;
+
+        // Push all characters into the stack
+        while (temp != null) {
+            stack.push(temp.data);
+            temp = temp.next;
+        }
+
+        // Compare stack with linked list
+        temp = head;
+        while (temp != null) {
+            if (temp.data != stack.pop()) {
+                return false;
+            }
+            temp = temp.next;
+        }
+
+        return true;
+    }
+}
+
+public class PalindromeSinglyLinkedList {
 
     public static void main(String[] args) {
+        String input = "level";
+        input = input.toLowerCase();
 
-        String input = "racecar";
+        SinglyLinkedList list = new SinglyLinkedList();
 
-        String str = input.toLowerCase();
-
-
-        Deque<Character> deque = new ArrayDeque<>();
-
-        for (int i = 0; i < str.length(); i++) {
-            deque.addLast(str.charAt(i));
+        // Add each character to the linked list
+        for (int i = 0; i < input.length(); i++) {
+            list.append(input.charAt(i));
         }
-
-        boolean isPalindrome = true;
-
-
-        while (deque.size() > 1) {
-            char front = deque.removeFirst();
-            char rear = deque.removeLast();
-
-            if (front != rear) {
-                isPalindrome = false;
-                break;
-            }
-        }
-
 
         System.out.println("String: " + input);
-        if (isPalindrome) {
+        if (list.isPalindrome()) {
             System.out.println("It is a palindrome.");
         } else {
             System.out.println("It is not a palindrome.");
