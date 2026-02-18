@@ -1,36 +1,47 @@
-import java.util.Scanner;
+import java.util.Queue;
+import java.util.LinkedList;
+import java.util.Stack;
 
-public class PalindromeChecker {
+public class FifoLifoDemo {
+
     public static void main(String[] args) {
 
 
-                String input = "madam";
 
-                input = input.toLowerCase();
+        Queue<String> queue = new LinkedList<>();
 
-                Stack<Character> stack = new Stack<>();
-
-
-                for (int i = 0; i < input.length(); i++) {
-                    stack.push(input.charAt(i));
-                }
+        System.out.println("FIFO (Queue) Example:");
 
 
-                String reversed = "";
+        queue.add("Apple");
+        queue.add("Banana");
+        queue.add("Cherry");
 
-                while (!stack.isEmpty()) {
-                    reversed += stack.pop();
-                }
+        System.out.println("Queue: " + queue);
 
-
-                System.out.println("Original String: " + input);
-                if (input.equals(reversed)) {
-                    System.out.println("It is a palindrome.");
-                } else {
-                    System.out.println("It is not a palindrome.");
-                }
-            }
+        while (!queue.isEmpty()) {
+            String removed = queue.remove(); // removes from front
+            System.out.println("Removed: " + removed + " | Remaining Queue: " + queue);
         }
 
+        System.out.println("\n-------------------------------\n");
+
+
+        Stack<String> stack = new Stack<>();
+
+        System.out.println("LIFO (Stack) Example:");
+
+
+        stack.push("Apple");
+        stack.push("Banana");
+        stack.push("Cherry");
+
+        System.out.println("Stack: " + stack);
+
+        while (!stack.isEmpty()) {
+            String removed = stack.pop(); // removes from top
+            System.out.println("Popped: " + removed + " | Remaining Stack: " + stack);
+        }
     }
+}
 
