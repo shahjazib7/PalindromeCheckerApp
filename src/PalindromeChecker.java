@@ -8,7 +8,9 @@ class Node {
     }
 }
 
-public class PalindromeLinkedList {
+class PalindromeRecursion {
+
+    static Node left; // Pointer from start
 
     // Insert at end
     static Node insert(Node head, int data) {
@@ -23,45 +25,26 @@ public class PalindromeLinkedList {
         return head;
     }
 
-    // Reverse linked list
-    static Node reverse(Node head) {
-        Node prev = null, curr = head;
-
-        while (curr != null) {
-            Node next = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = next;
-        }
-        return prev;
-    }
-
-    // Check palindrome
-    static boolean isPalindrome(Node head) {
-        if (head == null || head.next == null)
+    // Recursive palindrome check
+    static boolean isPalindromeUtil(Node right) {
+        if (right == null)
             return true;
 
-        Node slow = head, fast = head;
+        boolean result = isPalindromeUtil(right.next);
+        if (!result)
+            return false;
 
-        // Find middle
-        while (fast.next != null && fast.next.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-        }
+        // Compare left and right
+        if (left.data != right.data)
+            return false;
 
-        // Reverse second half
-        Node secondHalf = reverse(slow.next);
-        Node firstHalf = head;
-
-        // Compare halves
-        while (secondHalf != null) {
-            if (firstHalf.data != secondHalf.data)
-                return false;
-
-            firstHalf = firstHalf.next;
-            secondHalf = secondHalf.next;
-        }
+        left = left.next; // Move forward
         return true;
+    }
+
+    static boolean isPalindrome(Node head) {
+        left = head;
+        return isPalindromeUtil(head);
     }
 
     // Display list
