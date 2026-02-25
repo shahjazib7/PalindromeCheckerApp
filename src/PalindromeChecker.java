@@ -1,11 +1,9 @@
 import java.util.Scanner;
 
-class PalindromeAlgorithms {
+class PalindromePerformance {
 
-    // Method 1: Iterative (Two-pointer)
+    // Iterative Method
     static boolean iterative(String str) {
-        str = str.replaceAll("\\s", "").toLowerCase();
-
         int left = 0, right = str.length() - 1;
         while (left < right) {
             if (str.charAt(left) != str.charAt(right))
@@ -16,7 +14,7 @@ class PalindromeAlgorithms {
         return true;
     }
 
-    // Method 2: Recursive
+    // Recursive Method
     static boolean recursive(String str, int left, int right) {
         if (left >= right)
             return true;
@@ -25,9 +23,8 @@ class PalindromeAlgorithms {
         return recursive(str, left + 1, right - 1);
     }
 
-    // Method 3: Reverse String
+    // Reverse String Method
     static boolean reverseMethod(String str) {
-        str = str.replaceAll("\\s", "").toLowerCase();
         String reversed = new StringBuilder(str).reverse().toString();
         return str.equals(reversed);
     }
@@ -41,37 +38,30 @@ class Main {
         System.out.print("Enter string: ");
         String input = sc.nextLine();
 
-        System.out.println("\nChoose algorithm:");
-        System.out.println("1. Iterative");
-        System.out.println("2. Recursive");
-        System.out.println("3. Reverse String");
+        // Remove spaces & case for fair comparison
+        input = input.replaceAll("\\s", "").toLowerCase();
 
-        int choice = sc.nextInt();
+        long start, end;
 
-        boolean result = false;
+        // Iterative
+        start = System.nanoTime();
+        boolean res1 = PalindromePerformance.iterative(input);
+        end = System.nanoTime();
+        System.out.println("Iterative: " + res1 +
+                " | Time: " + (end - start) + " ns");
 
-        switch (choice) {
-            case 1:
-                result = PalindromeAlgorithms.iterative(input);
-                break;
+        // Recursive
+        start = System.nanoTime();
+        boolean res2 = PalindromePerformance.recursive(input, 0, input.length() - 1);
+        end = System.nanoTime();
+        System.out.println("Recursive: " + res2 +
+                " | Time: " + (end - start) + " ns");
 
-            case 2:
-                input = input.replaceAll("\\s", "").toLowerCase();
-                result = PalindromeAlgorithms.recursive(input, 0, input.length() - 1);
-                break;
-
-            case 3:
-                result = PalindromeAlgorithms.reverseMethod(input);
-                break;
-
-            default:
-                System.out.println("Invalid choice");
-                return;
-        }
-
-        if (result)
-            System.out.println("Palindrome");
-        else
-            System.out.println("Not Palindrome");
+        // Reverse String
+        start = System.nanoTime();
+        boolean res3 = PalindromePerformance.reverseMethod(input);
+        end = System.nanoTime();
+        System.out.println("Reverse: " + res3 +
+                " | Time: " + (end - start) + " ns");
     }
 }
