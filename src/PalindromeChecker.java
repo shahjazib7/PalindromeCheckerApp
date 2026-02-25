@@ -1,40 +1,92 @@
-import java.util.Deque;
-import java.util.ArrayDeque;
+class Node {
+    int data;
+    Node next;
 
-public class PalindromeCheckerDeque {
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+public class PalindromeLinkedList {
+
+    // Insert at end
+    static Node insert(Node head, int data) {
+        Node newNode = new Node(data);
+        if (head == null) return newNode;
+
+        Node temp = head;
+        while (temp.next != null)
+            temp = temp.next;
+
+        temp.next = newNode;
+        return head;
+    }
+
+    // Reverse linked list
+    static Node reverse(Node head) {
+        Node prev = null, curr = head;
+
+        while (curr != null) {
+            Node next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
+
+    // Check palindrome
+    static boolean isPalindrome(Node head) {
+        if (head == null || head.next == null)
+            return true;
+
+        Node slow = head, fast = head;
+
+        // Find middle
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        // Reverse second half
+        Node secondHalf = reverse(slow.next);
+        Node firstHalf = head;
+
+        // Compare halves
+        while (secondHalf != null) {
+            if (firstHalf.data != secondHalf.data)
+                return false;
+
+            firstHalf = firstHalf.next;
+            secondHalf = secondHalf.next;
+        }
+        return true;
+    }
+
+    // Display list
+    static void display(Node head) {
+        while (head != null) {
+            System.out.print(head.data + " -> ");
+            head = head.next;
+        }
+        System.out.println("NULL");
+    }
 
     public static void main(String[] args) {
+        Node head = null;
 
-        String input = "racecar";
+        head = insert(head, 1);
+        head = insert(head, 2);
+        head = insert(head, 3);
+        head = insert(head, 2);
+        head = insert(head, 1);
 
-        String str = input.toLowerCase();
+        display(head);
 
-
-        Deque<Character> deque = new ArrayDeque<>();
-
-        for (int i = 0; i < str.length(); i++) {
-            deque.addLast(str.charAt(i));
-        }
-
-        boolean isPalindrome = true;
-
-
-        while (deque.size() > 1) {
-            char front = deque.removeFirst();
-            char rear = deque.removeLast();
-
-            if (front != rear) {
-                isPalindrome = false;
-                break;
-            }
-        }
-
-
-        System.out.println("String: " + input);
-        if (isPalindrome) {
-            System.out.println("It is a palindrome.");
-        } else {
-            System.out.println("It is not a palindrome.");
-        }
+        if (isPalindrome(head))
+            System.out.println("Palindrome");
+        else
+            System.out.println("Not Palindrome");
     }
 }
